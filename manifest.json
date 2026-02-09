@@ -1,0 +1,8 @@
+{
+  "name": "Portal de Cursos Gratuitos",
+  "short_name": "Cursos",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#121212",
+  "theme_color": "#121212"
+}
