@@ -1,31 +1,33 @@
 const input = document.getElementById("searchInput");
 const results = document.getElementById("results");
 
-input.addEventListener("input", () => {
-  const termo = input.value.toLowerCase();
+function render(cursosFiltrados) {
   results.innerHTML = "";
 
-  if (termo.length === 0) return;
+  cursosFiltrados.forEach(curso => {
+    const card = document.createElement("div");
+    card.className = "card";
 
-  const encontrados = cursos.filter(curso =>
-    curso.tags.some(tag => tag.includes(termo))
-  );
-
-  if (encontrados.length === 0) {
-    results.innerHTML = "<p>Nenhum curso encontrado.</p>";
-    return;
-  }
-
-  encontrados.forEach(curso => {
-    const div = document.createElement("div");
-    div.className = "card";
-
-    div.innerHTML = `
+    card.innerHTML = `
       <h3>${curso.titulo}</h3>
       <p>${curso.descricao}</p>
       <a href="${curso.link}" target="_blank">Acessar curso</a>
     `;
 
-    results.appendChild(div);
+    results.appendChild(card);
   });
+}
+
+input.addEventListener("input", () => {
+  const termo = input.value.toLowerCase();
+
+  const filtrados = cursos.filter(curso =>
+    curso.tags.some(tag => tag.includes(termo)) ||
+    curso.titulo.toLowerCase().includes(termo)
+  );
+
+  render(filtrados);
 });
+
+// Render inicial
+render(cursos);
