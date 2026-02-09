@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -6,28 +5,43 @@
   <title>Portal de Cursos Gratuitos</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
+  <!-- Google Fonts (Material) -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+  <!-- Material Icons -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
   <link rel="stylesheet" href="css/style.css">
-  <link rel="manifest" href="manifest.json">
 </head>
 <body>
 
-  <header>
-    <h1>📚 Portal de Cursos Gratuitos</h1>
-    <p>Busque cursos por assunto</p>
+  <header class="topbar">
+    <h1>Portal de Cursos</h1>
+    <span>Conteúdo gratuito por assunto</span>
   </header>
 
-  <main>
-    <input 
-      type="text" 
-      id="searchInput" 
-      placeholder="Ex: programação, marketing, excel..."
-    >
+  <main class="container">
 
-    <div id="results"></div>
+    <div class="search-box">
+      <i class="material-icons">search</i>
+      <input 
+        type="text" 
+        id="searchInput" 
+        placeholder="Pesquisar por assunto, ex: programação, excel..."
+      >
+    </div>
+
+    <section id="results" class="grid"></section>
+
   </main>
 
   <footer>
-    <p>Projeto educacional • GitHub Pages</p>
+    <p>
+      Este site foi criado por <strong>Mayck Motta</strong> para auxílio durante o curso de 
+      <strong>Análise de Desenvolvimento de Sistemas</strong>.
+      <br>
+      Não há vínculo com a Instituição <strong>Cruzeiro do Sul</strong>.
+    </p>
   </footer>
 
   <script src="js/data.js"></script>
