@@ -5,46 +5,52 @@
   <title>Portal de Cursos Gratuitos</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <!-- Google Fonts (Material) -->
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
 
   <!-- Material Icons -->
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
 
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
-  <header class="topbar">
-    <h1>Portal de Cursos</h1>
-    <span>Conteúdo gratuito por assunto</span>
-  </header>
+<header class="topbar">
+  <h1>📘 Portal de Cursos</h1>
+  <p>Aprendizado gratuito organizado por assunto</p>
 
-  <main class="container">
+  <button id="toggleTheme" title="Alternar tema">
+    <span class="material-icons-outlined">dark_mode</span>
+  </button>
+</header>
 
-    <div class="search-box">
-      <i class="material-icons">search</i>
-      <input 
-        type="text" 
-        id="searchInput" 
-        placeholder="Pesquisar por assunto, ex: programação, excel..."
-      >
-    </div>
+<main class="container">
 
-    <section id="results" class="grid"></section>
+  <!-- Busca -->
+  <div class="search-box">
+    <span class="material-icons-outlined">search</span>
+    <input id="searchInput" type="text" placeholder="Buscar cursos, ex: programação, banco de dados...">
+  </div>
 
-  </main>
+  <!-- Categorias -->
+  <div class="chips" id="chips"></div>
 
-  <footer>
-    <p>
-      Este site foi criado por <strong>Mayck Motta</strong> para auxílio durante o curso de 
-      <strong>Análise de Desenvolvimento de Sistemas</strong>.
-      <br>
-      Não há vínculo com a Instituição <strong>Cruzeiro do Sul</strong>.
-    </p>
-  </footer>
+  <!-- Cards -->
+  <section id="results" class="grid"></section>
 
-  <script src="js/data.js"></script>
-  <script src="js/search.js"></script>
+</main>
+
+<footer>
+  <p>
+    Este site foi criado por <strong>Mayck Motta</strong> para auxílio durante o curso de
+    <strong>Análise de Desenvolvimento de Sistemas</strong>.<br>
+    Não há vínculo com a Instituição <strong>Cruzeiro do Sul</strong>.
+  </p>
+</footer>
+
+<script src="js/data.js"></script>
+<script src="js/search.js"></script>
+<script src="js/ui.js"></script>
+
 </body>
 </html>
