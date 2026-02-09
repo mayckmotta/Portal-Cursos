@@ -1,33 +1,25 @@
 const input = document.getElementById("searchInput");
 const results = document.getElementById("results");
 
-function render(cursosFiltrados) {
+function render(lista) {
   results.innerHTML = "";
-
-  cursosFiltrados.forEach(curso => {
-    const card = document.createElement("div");
-    card.className = "card";
-
-    card.innerHTML = `
-      <h3>${curso.titulo}</h3>
-      <p>${curso.descricao}</p>
-      <a href="${curso.link}" target="_blank">Acessar curso</a>
+  lista.forEach(c => {
+    results.innerHTML += `
+      <div class="card">
+        <h3>${c.titulo}</h3>
+        <p>${c.descricao}</p>
+        <a href="${c.link}" target="_blank">Acessar curso</a>
+      </div>
     `;
-
-    results.appendChild(card);
   });
 }
 
-input.addEventListener("input", () => {
-  const termo = input.value.toLowerCase();
+input.oninput = () => {
+  const v = input.value.toLowerCase();
+  render(cursos.filter(c =>
+    c.titulo.toLowerCase().includes(v) ||
+    c.tags.some(t => t.includes(v))
+  ));
+};
 
-  const filtrados = cursos.filter(curso =>
-    curso.tags.some(tag => tag.includes(termo)) ||
-    curso.titulo.toLowerCase().includes(termo)
-  );
-
-  render(filtrados);
-});
-
-// Render inicial
 render(cursos);
