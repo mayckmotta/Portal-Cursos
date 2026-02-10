@@ -26,7 +26,7 @@ function render(lista) {
     article.style.opacity = "0";
 
     article.innerHTML = `
-      <span class="material-symbols-outlined" style="color: var(--md-sys-color-primary)">school</span>
+      <span class="material-icons" style="color: var(--md-sys-color-primary)">school</span>
       <h3>${c.titulo}</h3>
       <p style="opacity: 0.8; font-size: 14px; line-height: 1.5;">${c.descricao}</p>
       <a href="${c.link}" target="_blank">Acessar Conteúdo</a>
