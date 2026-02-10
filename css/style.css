@@ -92,24 +92,53 @@ body {
   outline: none;
 }
 
-/* Chips */
-.chips { display: flex; gap: 8px; margin-bottom: 16px; overflow-x: auto; padding: 4px 0; }
+
+/* Container dos Filtros */
+.chips {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 24px;
+  overflow-x: auto;
+  padding: 8px 4px; /* Aumentado para não cortar a sombra/foco */
+  
+  /* Melhora o deslize no celular */
+  scroll-snap-type: x proximity;
+  -webkit-overflow-scrolling: touch;
+  
+  /* Garante que o último chip não fique colado na borda */
+  scroll-padding-right: 24px;
+}
+
+/* Esconde a barra de rolagem mas mantém a funcionalidade */
+.chips::-webkit-scrollbar {
+  display: none;
+}
+
+/* Botão Individual (Chip) */
 .chip {
-  background: transparent;
+  background: var(--md-sys-color-surface-container);
   border: 1px solid var(--md-sys-color-outline);
   color: var(--md-sys-color-on-surface);
-  padding: 8px 16px;
-  border-radius: 8px;
+  padding: 10px 20px;
+  border-radius: 12px; /* Estilo mais MD3 */
   cursor: pointer;
   font-weight: 500;
   white-space: nowrap;
   transition: var(--transition-smooth);
+  scroll-snap-align: start;
+  flex-shrink: 0; /* Impede que o botão "esmague" para caber na tela */
 }
+
 .chip.active {
-  background: var(--md-sys-color-primary-container);
-  border-color: var(--md-sys-color-primary-container);
-  color: var(--md-sys-color-on-primary-container);
+  background: var(--md-sys-color-primary);
+  border-color: var(--md-sys-color-primary);
+  color: var(--md-sys-color-on-primary);
+  box-shadow: 0 2px 8px rgba(0, 95, 175, 0.3);
 }
+
+
+
+
 
 /* Grid & Cards */
 .grid {
