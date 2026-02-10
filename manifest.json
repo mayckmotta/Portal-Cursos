@@ -3,6 +3,13 @@
   "short_name": "Cursos",
   "start_url": ".",
   "display": "standalone",
-  "background_color": "#121212",
-  "theme_color": "#121212"
+  "background_color": "#fdfbff",
+  "theme_color": "#005faf",
+  "icons": [
+    {
+      "src": "https://fonts.gstatic.com/s/i/short-term/release/googlestandardicons/school/default/48px.svg",
+      "sizes": "48x48",
+      "type": "image/svg+xml"
+    }
+  ]
 }

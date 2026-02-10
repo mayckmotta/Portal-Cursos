@@ -2,48 +2,47 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <title>Portal de Cursos Gratuitos</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  <!-- Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
-
-  <!-- Material Icons -->
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
-
+  <title>Portal de Cursos Gratuitos | Mayck Motta</title>
+  
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+  
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
 <header class="topbar">
-  <h1>📘 Portal de Cursos</h1>
-  <p>Aprendizado gratuito organizado por assunto</p>
-
-  <button id="toggleTheme" title="Alternar tema">
-    <span class="material-icons-outlined">dark_mode</span>
-  </button>
+  <div class="header-content">
+    <div>
+      <h1>Portal de Cursos</h1>
+      <p>Aprendizado gratuito organizado por assunto</p>
+    </div>
+    <button id="toggleTheme" title="Alternar tema">
+      <span class="material-symbols-outlined">dark_mode</span>
+    </button>
+  </div>
 </header>
 
 <main class="container">
-
-  <!-- Busca -->
   <div class="search-box">
-    <span class="material-icons-outlined">search</span>
+    <span class="material-symbols-outlined">search</span>
     <input id="searchInput" type="text" placeholder="Buscar cursos, ex: programação, banco de dados...">
   </div>
 
-  <!-- Categorias -->
   <div class="chips" id="chips"></div>
 
-  <!-- Cards -->
-  <section id="results" class="grid"></section>
+  <div class="status-bar">
+    <span id="resultCount" class="result-count">Carregando cursos...</span>
+  </div>
 
+  <section id="results" class="grid"></section>
 </main>
 
 <footer>
   <p>
-    Este site foi criado por <strong>Mayck Motta</strong> para auxílio durante o curso de
-    <strong>Análise de Desenvolvimento de Sistemas</strong>.<br>
+    Este site foi criado por <strong>Mayck Motta</strong> para auxílio durante o curso de 
+    <strong>Análise e Desenvolvimento de Sistemas</strong>.<br>
     Não há vínculo com a Instituição <strong>Cruzeiro do Sul</strong>.
   </p>
 </footer>
