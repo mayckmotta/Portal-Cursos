@@ -159,3 +159,46 @@ footer {
   font-size: 13px;
   border-radius: 32px 32px 0 0;
 }
+
+/* Ajustes para Dispositivos Móveis */
+@media (max-width: 600px) {
+  .topbar {
+    padding: 24px 0; /* Reduz a altura do cabeçalho */
+    border-radius: 0 0 24px 24px;
+  }
+
+  .header-content {
+    flex-direction: row; /* Mantém lado a lado, mas vamos ajustar o texto */
+    align-items: center;
+    gap: 12px;
+  }
+
+  .topbar h1 {
+    font-size: 1.5rem; /* Título menor para não quebrar */
+    line-height: 1.2;
+  }
+
+  .topbar p {
+    font-size: 0.875rem;
+  }
+
+  #toggleTheme {
+    width: 40px; /* Botão um pouco menor */
+    height: 40px;
+    flex-shrink: 0; /* Impede o botão de amassar */
+  }
+
+  .container {
+    padding: 0 16px 32px; /* Reduz as margens laterais */
+  }
+
+  .grid {
+    grid-template-columns: 1fr; /* Força uma única coluna em telas muito pequenas */
+    gap: 16px;
+  }
+
+  .search-box {
+    height: 48px;
+    margin-bottom: 16px;
+  }
+}
