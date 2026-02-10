@@ -12,7 +12,7 @@ function render(lista) {
 
   if (total === 0) {
     results.innerHTML = `<div style="grid-column: 1/-1; text-align: center; padding: 40px; opacity: 0.6;">
-      <span class="material-symbols-outlined" style="font-size: 48px;">search_off</span>
+      <span class="material-icons" style="font-size: 48px;">search_off</span>
       <p>Tente outros termos de busca.</p>
     </div>`;
     return;
