@@ -59,3 +59,62 @@ input.oninput = () => {
 };
 
 render(cursos);
+
+/* Splash Screen Styles */
+#splash {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--md-sys-color-surface);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  transition: opacity 0.5s ease, visibility 0.5s;
+}
+
+.splash-content {
+  text-align: center;
+  animation: pulse 2s infinite ease-in-out;
+}
+
+.splash-logo {
+  font-size: 80px;
+  color: var(--md-sys-color-primary);
+  margin-bottom: 16px;
+}
+
+.splash-title {
+  font-weight: 400;
+  color: var(--md-sys-color-primary);
+  margin-bottom: 24px;
+}
+
+/* Loader Circular Estilo MD3 */
+.loader {
+  width: 40px;
+  height: 40px;
+  border: 4px solid var(--md-sys-color-primary-container);
+  border-top: 4px solid var(--md-sys-color-primary);
+  border-radius: 50%;
+  margin: 0 auto;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.05); opacity: 0.8; }
+}
+
+/* Classe para esconder a splash */
+.splash-hidden {
+  opacity: 0;
+  visibility: hidden;
+}
