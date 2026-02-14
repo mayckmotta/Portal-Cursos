@@ -119,17 +119,20 @@ render(cursos);
   visibility: hidden;
 }
 
-function hideSplash() {
+// No final do seu search.js, apague o que tinha e coloque isso:
+function fecharSplash() {
   const splash = document.getElementById('splash');
   if (splash) {
-    splash.classList.add('splash-hidden');
-    // Remove do DOM após a transição para não interferir nos cliques
-    setTimeout(() => splash.style.display = 'none', 500);
+    console.log("Removendo Splash Screen...");
+    splash.style.opacity = '0';
+    setTimeout(() => {
+      splash.style.display = 'none';
+    }, 500);
   }
 }
 
-// Tenta esconder quando tudo carregar
-window.addEventListener('load', hideSplash);
+// Executa assim que o script carregar
+fecharSplash();
 
-// Segurança: Se em 3 segundos o load não disparar, força a saída
-setTimeout(hideSplash, 3000);
+// E por segurança, executa de novo quando a janela carregar tudo
+window.onload = fecharSplash;
