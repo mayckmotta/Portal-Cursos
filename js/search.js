@@ -1,6 +1,10 @@
+// Referências do DOM
+
 const input = document.getElementById("searchInput");
 const results = document.getElementById("results");
 const countEl = document.getElementById("resultCount");
+
+// Função Principal de Renderização
 
 function render(lista) {
   results.innerHTML = "";
@@ -10,7 +14,7 @@ function render(lista) {
                      total === 1 ? "1 curso encontrado" : `${total} cursos encontrados`;
 
   if (total === 0) {
-    results.innerHTML = `<div style="grid-column: 1/-1; text-align: center; padding: 40px; opacity: 0.6;">
+  results.innerHTML = `<div style="grid-column: 1/-1; text-align: center; padding: 40px; opacity: 0.6;">
       <span class="material-icons" style="font-size: 48px;">search_off</span>
       <p>Nenhum curso por aqui.</p>
     </div>`;
@@ -38,6 +42,8 @@ function render(lista) {
     results.appendChild(article);
   });
 }
+
+// Lógica de Busca
 
 input.oninput = () => {
   const v = input.value.toLowerCase();
@@ -70,9 +76,8 @@ function hideSplash() {
   }
 }
 
-// Inicializa o portal
-render(cursos);
+// Inicialização: Renderiza os cursos e tenta esconder a splash
 
-// Esconde a splash quando tudo carregar ou após 3 segundos (segurança)
+render(cursos);
 window.addEventListener('load', hideSplash);
-setTimeout(hideSplash, 3000);
+setTimeout(hideSplash, 3000); // Segurança: esconde após 3s de qualquer jeito
