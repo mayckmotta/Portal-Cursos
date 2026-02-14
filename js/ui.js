@@ -81,3 +81,36 @@ categorias.forEach(cat => {
 
   chipsDiv.appendChild(chip);
 });
+
+// --- Lógica de Conclusão ---
+let concluidos = JSON.parse(localStorage.getItem('portal_cursos_done')) || [];
+
+function toggleDone(titulo) {
+  const index = concluidos.indexOf(titulo);
+  if (index > -1) {
+    concluidos.splice(index, 1);
+  } else {
+    concluidos.push(titulo);
+  }
+  localStorage.setItem('portal_cursos_done', JSON.stringify(concluidos));
+  
+  // Atualiza a interface
+  atualizarProgresso();
+  const v = document.getElementById("searchInput").value.toLowerCase();
+  render(cursos.filter(c => c.titulo.toLowerCase().includes(v))); 
+}
+
+function atualizarProgresso() {
+  const porcentagem = Math.round((concluidos.length / cursos.length) * 100);
+  const bar = document.getElementById("progressBar");
+  const text = document.getElementById("completionRate");
+  
+  if (bar && text) {
+    bar.style.width = `${porcentagem}%`;
+    text.innerText = `${porcentagem}% concluído`;
+  }
+}
+
+// Chame isso no final do arquivo para iniciar a barra
+atualizarProgresso();
+
