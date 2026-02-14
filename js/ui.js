@@ -58,6 +58,7 @@ toggleThemeBtn.addEventListener("click", () => {
 });
 
 // --- Inicialização dos Chips ---
+
 const chipsDiv = document.getElementById("chips");
 const categorias = ["Todos", "Favoritos", ...new Set(cursos.map(c => c.categoria))];
 
