@@ -1,3 +1,4 @@
+const CACHE_NAME = 'portal-cursos-v2'; // Mude de v1 para v2
 const ASSETS = [
   './',
   './index.html',
@@ -10,6 +11,19 @@ const ASSETS = [
   './icon-512.png',
   'https://fonts.googleapis.com/icon?family=Material+Icons'
 ];
+
+// Limpa caches antigos quando a nova versão ativa
+self.addEventListener('activate', (e) => {
+  e.waitUntil(
+    caches.keys().then((keys) => {
+      return Promise.all(keys.map((key) => {
+        if (key !== CACHE_NAME) {
+          return caches.delete(key);
+        }
+      }));
+    })
+  );
+});
 
 // Instala o Service Worker e armazena os arquivos no cache
 self.addEventListener('install', (e) => {
