@@ -41,7 +41,8 @@ function render(lista) {
 
 input.oninput = () => {
   const v = input.value.toLowerCase();
-  const currentCat = document.querySelector(".chip.active").innerText;
+  const chipAtivo = document.querySelector(".chip.active");
+  const currentCat = chipAtivo ? chipAtivo.innerText : "Todos";
 
   const filtrados = cursos.filter(c => {
     const matchSearch = c.titulo.toLowerCase().includes(v) || 
@@ -58,81 +59,20 @@ input.oninput = () => {
   render(filtrados);
 };
 
-render(cursos);
-
-/* Splash Screen Styles */
-#splash {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: var(--md-sys-color-surface);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 9999;
-  transition: opacity 0.5s ease, visibility 0.5s;
-}
-
-.splash-content {
-  text-align: center;
-  animation: pulse 2s infinite ease-in-out;
-}
-
-.splash-logo {
-  font-size: 80px;
-  color: var(--md-sys-color-primary);
-  margin-bottom: 16px;
-}
-
-.splash-title {
-  font-weight: 400;
-  color: var(--md-sys-color-primary);
-  margin-bottom: 24px;
-}
-
-/* Loader Circular Estilo MD3 */
-.loader {
-  width: 40px;
-  height: 40px;
-  border: 4px solid var(--md-sys-color-primary-container);
-  border-top: 4px solid var(--md-sys-color-primary);
-  border-radius: 50%;
-  margin: 0 auto;
-  animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-
-@keyframes pulse {
-  0%, 100% { transform: scale(1); opacity: 1; }
-  50% { transform: scale(1.05); opacity: 0.8; }
-}
-
-/* Classe para esconder a splash */
-.splash-hidden {
-  opacity: 0;
-  visibility: hidden;
-}
-
-// No final do seu search.js, apague o que tinha e coloque isso:
-function fecharSplash() {
+// --- Lógica da Splash Screen ---
+function hideSplash() {
   const splash = document.getElementById('splash');
   if (splash) {
-    console.log("Removendo Splash Screen...");
-    splash.style.opacity = '0';
+    splash.classList.add('splash-hidden');
     setTimeout(() => {
       splash.style.display = 'none';
     }, 500);
   }
 }
 
-// Executa assim que o script carregar
-fecharSplash();
+// Inicializa o portal
+render(cursos);
 
-// E por segurança, executa de novo quando a janela carregar tudo
-window.onload = fecharSplash;
+// Esconde a splash quando tudo carregar ou após 3 segundos (segurança)
+window.addEventListener('load', hideSplash);
+setTimeout(hideSplash, 3000);
