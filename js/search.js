@@ -118,3 +118,18 @@ render(cursos);
   opacity: 0;
   visibility: hidden;
 }
+
+function hideSplash() {
+  const splash = document.getElementById('splash');
+  if (splash) {
+    splash.classList.add('splash-hidden');
+    // Remove do DOM após a transição para não interferir nos cliques
+    setTimeout(() => splash.style.display = 'none', 500);
+  }
+}
+
+// Tenta esconder quando tudo carregar
+window.addEventListener('load', hideSplash);
+
+// Segurança: Se em 3 segundos o load não disparar, força a saída
+setTimeout(hideSplash, 3000);
