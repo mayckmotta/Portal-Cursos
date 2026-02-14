@@ -5,17 +5,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Portal de Cursos Gratuitos | Mayck Motta</title>
   
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#005faf">
+
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
   
   <link rel="stylesheet" href="css/style.css">
 
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="apple-mobile-web-app-title" content="Cursos">
-<link rel="apple-touch-icon" href="icon-192.png">
-
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Cursos">
+  <link rel="apple-touch-icon" href="icon-192.png">
 </head>
 <body>
 
@@ -26,7 +27,6 @@
     <div class="loader"></div>
   </div>
 </div>
-
 
 <header class="topbar">
   <div class="header-content">
@@ -64,16 +64,18 @@
 </footer>
 
 <script src="js/data.js"></script>
-<script src="js/search.js"></script>
-<script src="js/ui.js"></script>
+<script src="js/ui.js"></script> <script src="js/search.js"></script>
+
 <script>
+  // Registro do Service Worker com caminho relativo correto para GitHub Pages
   if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('./sw.js')
-      .then(() => console.log("Service Worker registrado com sucesso!"))
-      .catch((err) => console.log("Erro ao registrar Service Worker:", err));
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('./sw.js')
+        .then(reg => console.log("SW registrado!", reg.scope))
+        .catch(err => console.log("Erro no SW:", err));
+    });
   }
 </script>
-
 
 </body>
 </html>
