@@ -63,19 +63,22 @@ input.oninput = () => {
 };
 
 // --- Lógica da Splash Screen ---
+
 function hideSplash() {
   const splash = document.getElementById('splash');
   if (splash) {
-    splash.classList.add('splash-hidden');
+
+    // Adicionamos um delay proposital de 1 segundo para a animação aparecer
+
     setTimeout(() => {
-      splash.style.display = 'none';
-    }, 500);
+      splash.classList.add('splash-hidden');
+      setTimeout(() => { splash.style.display = 'none'; }, 500);
+    }, 2000); 
   }
 }
 
 // Inicialização
 render(cursos);
 
-// Força a saída da splash em qualquer situação
+// Dispara a saída da splash
 window.addEventListener('load', hideSplash);
-setTimeout(hideSplash, 3000);
