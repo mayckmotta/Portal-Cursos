@@ -1,32 +1,24 @@
-// Referências dos elementos do DOM
 const input = document.getElementById("searchInput");
 const results = document.getElementById("results");
 const countEl = document.getElementById("resultCount");
 
-/**
- * Função para renderizar a lista de cursos na tela
- * @param {Array} lista - Array de objetos de cursos
- */
 function render(lista) {
   results.innerHTML = "";
   
-  // Atualiza o contador de resultados
   const total = lista.length;
   countEl.innerText = total === 0 ? "Nenhum curso encontrado" : 
                      total === 1 ? "1 curso encontrado" : `${total} cursos encontrados`;
 
-  // Estado vazio: quando a busca não retorna nada
   if (total === 0) {
     results.innerHTML = `<div style="grid-column: 1/-1; text-align: center; padding: 40px; opacity: 0.6;">
       <span class="material-icons" style="font-size: 48px;">search_off</span>
-      <p>Nenhum curso por aqui. Tente outros termos.</p>
+      <p>Nenhum curso por aqui.</p>
     </div>`;
     return;
   }
 
-  // Itera sobre a lista para criar os cards
   lista.forEach((c, index) => {
-    // Verifica estados de favorito e concluído (IDs vindos do localStorage via ui.js)
+    // Busca listas do LocalStorage definidas no ui.js
     const listaFavs = (typeof favoritos !== 'undefined') ? favoritos : [];
     const listaDone = (typeof concluidos !== 'undefined') ? concluidos : [];
     
@@ -36,19 +28,17 @@ function render(lista) {
     const article = document.createElement("article");
     article.className = "card";
     
-    // Efeito de entrada escalonado para os cards
+    // Removida a opacidade 0 para evitar que os cards sumam se o CSS falhar
     article.style.animation = `fadeIn 0.4s ease forwards ${index * 0.05}s`;
-    article.style.opacity = "0";
 
     article.innerHTML = `
       <div class="card-header">
         <span class="material-icons" style="color: var(--md-sys-color-primary)">school</span>
-        <div class="card-actions" style="display: flex; gap: 8px;">
-          <button class="done-btn ${isDone ? 'active' : ''}" onclick="toggleDone('${c.titulo}')" title="Marcar como concluído">
+        <div class="card-actions">
+          <button class="done-btn ${isDone ? 'active' : ''}" onclick="toggleDone('${c.titulo}')">
             <span class="material-icons">${isDone ? 'check_circle' : 'radio_button_unchecked'}</span>
           </button>
-          
-          <button class="fav-btn ${isFav ? 'active' : ''}" onclick="toggleFavorite('${c.titulo}')" title="Favoritar">
+          <button class="fav-btn ${isFav ? 'active' : ''}" onclick="toggleFavorite('${c.titulo}')">
             <span class="material-icons">${isFav ? 'star' : 'star_border'}</span>
           </button>
         </div>
@@ -61,59 +51,35 @@ function render(lista) {
   });
 }
 
-/**
- * Lógica de Filtro e Busca
- */
 input.oninput = () => {
-  const termoBusca = input.value.toLowerCase();
-  
-  // Identifica qual categoria (chip) está ativa no momento
+  const v = input.value.toLowerCase();
   const chipAtivo = document.querySelector(".chip.active");
-  const categoriaAtiva = chipAtivo ? chipAtivo.innerText : "Todos";
+  const currentCat = chipAtivo ? chipAtivo.innerText : "Todos";
 
   const filtrados = cursos.filter(c => {
-    // Verifica se o termo de busca bate com título, tags ou categoria
-    const bateBusca = c.titulo.toLowerCase().includes(termoBusca) || 
-                      c.tags.some(t => t.includes(termoBusca)) || 
-                      c.categoria.toLowerCase().includes(termoBusca);
+    const matchSearch = c.titulo.toLowerCase().includes(v) || 
+                        c.tags.some(t => t.includes(v)) || 
+                        c.categoria.toLowerCase().includes(v);
     
-    // Verifica se o curso pertence à categoria/filtro selecionado
-    let bateCategoria = true;
-    if (categoriaAtiva === "Favoritos") {
-      bateCategoria = (typeof favoritos !== 'undefined') && favoritos.includes(c.titulo);
-    } else if (categoriaAtiva !== "Todos") {
-      bateCategoria = (c.categoria === categoriaAtiva);
-    }
+    let matchCat = true;
+    if (currentCat === "Favoritos") matchCat = favoritos.includes(c.titulo);
+    else if (currentCat !== "Todos") matchCat = (c.categoria === currentCat);
 
-    return bateBusca && bateCategoria;
+    return matchSearch && matchCat;
   });
 
   render(filtrados);
 };
 
-/**
- * Controle da Splash Screen
- */
 function hideSplash() {
   const splash = document.getElementById('splash');
   if (splash) {
-    // Delay de 1s para garantir que a animação seja vista, depois fade out
-    setTimeout(() => {
-      splash.classList.add('splash-hidden');
-      setTimeout(() => {
-        splash.style.display = 'none';
-      }, 500); // Tempo da transição de opacidade definida no CSS
-    }, 1000);
+    splash.classList.add('splash-hidden');
+    setTimeout(() => { splash.style.display = 'none'; }, 500);
   }
 }
 
-// --- Inicialização do Portal ---
-
-// 1. Renderiza todos os cursos inicialmente
+// Inicializa
 render(cursos);
-
-// 2. Remove a Splash Screen quando a janela carregar totalmente
 window.addEventListener('load', hideSplash);
-
-// 3. Segurança: Caso o evento 'load' demore demais, força a saída em 3 segundos
 setTimeout(hideSplash, 3000);
