@@ -7,6 +7,8 @@ const ASSETS = [
   './js/ui.js',
   './js/search.js',
   './manifest.json',
+  './icon-192.png',
+  './icon-512.png',
   'https://fonts.googleapis.com/icon?family=Material+Icons'
 ];
 
