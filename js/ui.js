@@ -1,116 +1,79 @@
-const body = document.body;
-const toggle = document.getElementById("toggleTheme");
-const themeIcon = toggle.querySelector("span");
-
-// --- Lógica de Favoritos ---
+// --- Gerenciamento de Dados Locais ---
 let favoritos = JSON.parse(localStorage.getItem('portal_cursos_favs')) || [];
+let concluidos = JSON.parse(localStorage.getItem('portal_cursos_done')) || [];
 
+// --- Funções de Alternância (Favoritos e Conclusão) ---
 function toggleFavorite(titulo) {
   const index = favoritos.indexOf(titulo);
-  if (index > -1) {
-    favoritos.splice(index, 1);
-  } else {
-    favoritos.push(titulo);
-  }
+  if (index > -1) favoritos.splice(index, 1);
+  else favoritos.push(titulo);
+  
   localStorage.setItem('portal_cursos_favs', JSON.stringify(favoritos));
-  
-  // Re-renderiza para atualizar os ícones
-  const v = document.getElementById("searchInput").value.toLowerCase();
-  const currentCat = document.querySelector(".chip.active").innerText;
-  
-  // Atualiza a visualização atual
-  if (currentCat === "Favoritos") {
-    render(cursos.filter(c => favoritos.includes(c.titulo)));
-  } else {
-    // Se não estiver no filtro de favoritos, apenas re-filtra
-    const filtrados = cursos.filter(c => 
-      (currentCat === "Todos" || c.categoria === currentCat) &&
-      (c.titulo.toLowerCase().includes(v) || c.categoria.toLowerCase().includes(v))
-    );
-    render(filtrados);
-  }
+  executarRenderAtual();
 }
-
-// --- Tema ---
-toggle.addEventListener("click", () => {
-  if (!document.startViewTransition) {
-    toggleTheme();
-    return;
-  }
-  document.startViewTransition(() => toggleTheme());
-});
-
-function toggleTheme() {
-  body.classList.toggle("dark");
-  const isDark = body.classList.contains("dark");
-  themeIcon.innerText = isDark ? "light_mode" : "dark_mode";
-}
-
-// --- Chips de Categoria ---
-const chipsDiv = document.getElementById("chips");
-// Adicionamos "Favoritos" como uma categoria especial
-const categorias = ["Todos", "Favoritos", ...new Set(cursos.map(c => c.categoria))];
-let activeChip = null;
-
-categorias.forEach(cat => {
-  const chip = document.createElement("button");
-  chip.className = "chip";
-  chip.innerText = cat;
-
-  if (cat === "Todos") {
-    chip.classList.add("active");
-    activeChip = chip;
-  }
-
-  chip.addEventListener("click", () => {
-    if (activeChip) activeChip.classList.remove("active");
-    chip.classList.add("active");
-    activeChip = chip;
-
-    let filtrados;
-    if (cat === "Todos") {
-      filtrados = cursos;
-    } else if (cat === "Favoritos") {
-      filtrados = cursos.filter(c => favoritos.includes(c.titulo));
-    } else {
-      filtrados = cursos.filter(c => c.categoria === cat);
-    }
-    
-    render(filtrados);
-  });
-
-  chipsDiv.appendChild(chip);
-});
-
-// --- Lógica de Conclusão ---
-let concluidos = JSON.parse(localStorage.getItem('portal_cursos_done')) || [];
 
 function toggleDone(titulo) {
   const index = concluidos.indexOf(titulo);
-  if (index > -1) {
-    concluidos.splice(index, 1);
-  } else {
-    concluidos.push(titulo);
-  }
-  localStorage.setItem('portal_cursos_done', JSON.stringify(concluidos));
+  if (index > -1) concluidos.splice(index, 1);
+  else concluidos.push(titulo);
   
-  // Atualiza a interface
+  localStorage.setItem('portal_cursos_done', JSON.stringify(concluidos));
   atualizarProgresso();
-  const v = document.getElementById("searchInput").value.toLowerCase();
-  render(cursos.filter(c => c.titulo.toLowerCase().includes(v))); 
+  executarRenderAtual();
 }
 
+// --- Atualização da Interface ---
 function atualizarProgresso() {
   const porcentagem = Math.round((concluidos.length / cursos.length) * 100);
   const bar = document.getElementById("progressBar");
   const text = document.getElementById("completionRate");
   
-  if (bar && text) {
-    bar.style.width = `${porcentagem}%`;
-    text.innerText = `${porcentagem}% concluído`;
-  }
+  if (bar) bar.style.width = `${porcentagem}%`;
+  if (text) text.innerText = `${porcentagem}% concluído`;
 }
 
-// Chame isso no final do arquivo para iniciar a barra
-atualizarProgresso();
+function executarRenderAtual() {
+  const v = document.getElementById("searchInput").value.toLowerCase();
+  const chipAtivo = document.querySelector(".chip.active");
+  const cat = chipAtivo ? chipAtivo.innerText : "Todos";
+  
+  // Filtra de acordo com a categoria e busca atual
+  const filtrados = cursos.filter(c => {
+    const matchBusca = c.titulo.toLowerCase().includes(v) || c.categoria.toLowerCase().includes(v);
+    let matchCat = true;
+    if (cat === "Favoritos") matchCat = favoritos.includes(c.titulo);
+    else if (cat !== "Todos") matchCat = (c.categoria === cat);
+    return matchBusca && matchCat;
+  });
+  
+  if (typeof render === "function") render(filtrados);
+}
 
+// --- Tema ---
+const toggleThemeBtn = document.getElementById("toggleTheme");
+toggleThemeBtn.addEventListener("click", () => {
+  document.body.classList.toggle("dark");
+  const isDark = document.body.classList.contains("dark");
+  toggleThemeBtn.querySelector("span").innerText = isDark ? "light_mode" : "dark_mode";
+});
+
+// --- Inicialização dos Chips ---
+const chipsDiv = document.getElementById("chips");
+const categorias = ["Todos", "Favoritos", ...new Set(cursos.map(c => c.categoria))];
+
+categorias.forEach(cat => {
+  const chip = document.createElement("button");
+  chip.className = "chip" + (cat === "Todos" ? " active" : "");
+  chip.innerText = cat;
+
+  chip.addEventListener("click", () => {
+    document.querySelectorAll(".chip").forEach(c => c.classList.remove("active"));
+    chip.classList.add("active");
+    executarRenderAtual();
+  });
+
+  chipsDiv.appendChild(chip);
+});
+
+// Inicializa a barra de progresso no carregamento
+window.addEventListener('DOMContentLoaded', atualizarProgresso);
