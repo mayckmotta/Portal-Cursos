@@ -1,4 +1,3 @@
-const CACHE_NAME = 'portal-cursos-v1';
 const ASSETS = [
   './',
   './index.html',
